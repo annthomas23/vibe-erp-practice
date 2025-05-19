@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,9 +19,22 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["./*"]
+    },
+    "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./*"]
+      }
+    },
+    "require": ["tsconfig-paths/register"]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
