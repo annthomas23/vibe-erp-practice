@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "migrate": "npx prisma migrate dev && npx prisma generate",
     "seed": "npx ts-node --project tsconfig.json prisma/seed.ts"
   },
   "dependencies": {
