@@ -11,8 +11,45 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String          @id @default(uuid())
+  email         String          @unique
+  name          String?  
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  purchaseOrders PurchaseOrder[]
+}
+
+model Product {
+  id           String          @id @default(uuid())
+  name         String
+  description  String?
+  price        Float
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  lineItems    LineItem[]
+}
+
+model PurchaseOrder {
+  id            String      @id @default(uuid())
+  userId        String      // Foreign key to User
+  user          User        @relation(fields: [userId], references: [id])
+  orderNumber   String      @unique
+  status        String      // e.g., "PENDING", "COMPLETED", "CANCELLED"
+  totalAmount   Float
+  lineItems     LineItem[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model LineItem {
+  id              String        @id @default(uuid())
+  purchaseOrderId String        // Foreign key to PurchaseOrder
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id])
+  productId       String        // Foreign key to Product
+  product         Product       @relation(fields: [productId], references: [id])
+  quantity        Int
+  unitPrice       Float         // Price at time of purchase
+  totalPrice      Float         // quantity * unitPrice
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }

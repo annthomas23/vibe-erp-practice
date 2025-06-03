@@ -6,6 +6,10 @@ export async function GET(request: Request) {
     orderBy: {
       createdAt: "desc",
     },
+    select: {
+      email: true,
+      name: true,
+    },
   });
 
   return NextResponse.json(user);
